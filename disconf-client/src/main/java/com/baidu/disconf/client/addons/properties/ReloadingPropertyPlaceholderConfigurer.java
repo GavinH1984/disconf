@@ -27,6 +27,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.PropertyPlaceholderHelper;
 import org.springframework.util.StringValueResolver;
 
 /**
@@ -69,7 +70,7 @@ public class ReloadingPropertyPlaceholderConfigurer extends DefaultPropertyPlace
 
         DynamicProperty dynamic = null;
 
-        // replace reloading prefix and suffix by "normal" prefix and suffix.
+        // replace reloading prefix and suffix by "normal" prefix and suffixF.
         // remember all the "dynamic" placeholders encountered.
         StringBuffer buf = new StringBuffer(strVal);
         int startIndex = strVal.indexOf(this.placeholderPrefix);
@@ -93,8 +94,11 @@ public class ReloadingPropertyPlaceholderConfigurer extends DefaultPropertyPlace
                 startIndex = -1;
             }
         }
+
         // then, business as usual. no recursive reloading placeholders please.
-        return super.parseStringValue(buf.toString(), props, visitedPlaceholders);
+        // Fixed an issue with using obsolete api, which can't be started in spring5.
+        PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper(placeholderPrefix, placeholderSuffix, valueSeparator, ignoreUnresolvablePlaceholders);
+        return helper.replacePlaceholders(strVal, props);
     }
 
     /**

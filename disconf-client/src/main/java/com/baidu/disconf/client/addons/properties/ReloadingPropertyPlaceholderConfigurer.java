@@ -95,9 +95,9 @@ public class ReloadingPropertyPlaceholderConfigurer extends DefaultPropertyPlace
             }
         }
 
-        // then, business as usual. no recursive reloading placeholders please.
         // Fixed an issue with using obsolete api, which can't be started in spring5.
         PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper(placeholderPrefix, placeholderSuffix, valueSeparator, ignoreUnresolvablePlaceholders);
+        // then, business as usual. no recursive reloading placeholders please.
         return helper.replacePlaceholders(strVal, props);
     }
 

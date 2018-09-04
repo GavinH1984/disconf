@@ -1,3 +1,20 @@
+
+此分支主要修复使用Spring5和在SpringBoot2.0不能启动的问题。
+改动点：
+com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer第97行：
+```java
+// then, business as usual. no recursive reloading placeholders please.
+return super.parseStringValue(buf.toString(), props, visitedPlaceholders);
+```
+
+改为：
+```java
+// Fixed an issue with using obsolete api, which can't be started in spring5.
+// then, business as usual. no recursive reloading placeholders please.PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper(placeholderPrefix, placeholderSuffix, valueSeparator, ignoreUnresolvablePlaceholders);
+return helper.replacePlaceholders(strVal, props);
+```
+
+--------------------------------------------------------
 Disconf 
 =======
 

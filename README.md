@@ -1,4 +1,6 @@
 
+由于作者已经不再维护这个项目，所以有问题只能自己fork下来修复了。
+
 此分支主要修复使用Spring5和在SpringBoot2.0不能启动的问题。
 改动点：
 com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer第97行：
